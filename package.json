@@ -1,0 +1,25 @@
+{
+  "name": "bike-shed-bot",
+  "version": "1.0.0",
+  "description": "Slurping them codes",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "ava": "^0.25.0",
+    "express": "^4.16.3",
+    "slackbots": "^1.2.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "ava"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/paulbeattie/bike-shed-bot.git"
+  },
+  "author": "Paul Beattie",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/paulbeattie/bike-shed-bot#readme"
+}
