@@ -30,7 +30,7 @@ const fetchMessages = ((slackBot) => {
 });
 
 const extractShedCode = ((message) => {
-    messages[0].files[0].plain_text.match(numberRegex)
+    message[0].files[0].plain_text.match(numberRegex)
 })
 
 exports.getShedCode = async (req , res) => {
