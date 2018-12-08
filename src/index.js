@@ -9,37 +9,40 @@ const token = process.env.SLACK_API_KEY;
 const channel = process.env.SLACK_CHANNEL;
 const slackBotId = process.env.SLACK_BOT_ID
 
-const getCorrectLatestTs = (() => {
+const getCorrectLatestTs = () => {
     if (currentDayNumber >= thursday) {
         return moment().isoWeekday(4).unix();
     } else {
        return today.unix();
     }
-});
+};
 
-const fetchMessages = ((slackBot) => {
+const fetchMessages = async (slackBot) => {
     const oldest = moment().subtract(1, 'weeks').isoWeekday(thursday).unix();
     const latest = getCorrectLatestTs();
 
-    slackBot.channels.history({ channel, oldest, latest }).then((history) => {
-        return history.messages.filter((message) => {
-            message.user == 'USLACKBOT' && message.bot_id == slackBotId;
-        })
-    })
+    const { messages } = await slackBot.channels.history({ channel, oldest, latest });
 
-});
+    return messages
+        .filter((message) => message.user == 'USLACKBOT' &&
+            message.bot_id == slackBotId);
+};
 
-const extractShedCode = ((message) => {
-    message[0].files[0].plain_text.match(numberRegex)
-})
+const extractCode = (message) => {
+    const code = message[0].files[0].plain_text.match(numberRegex);
+
+    if (code != null) {
+        return code[0];
+    }
+}
 
 exports.getShedCode = async (req , res) => {
     var message = '';
     const slackBot = new Slack({ token })
 
     const messages = await fetchMessages(slackBot);
-    
-    const bikeShedCode = extractShedCode(messages);
+
+    const bikeShedCode = extractCode(messages);
 
     if (bikeShedCode != '') {
         message = `The code is ${bikeShedCode}`
