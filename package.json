@@ -12,15 +12,19 @@
     "moment": "^2.22.2",
     "slack": "^11.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^5.10.0",
+    "eslint-config-google": "^0.11.0"
+  },
   "scripts": {
-    "test": "ava"
+    "test": "ava",
+    "lint": "eslint src"
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@bitbucket.org/paulbeattie/bike-shed-bot.git"
+    "url": "git+ssh://git@github.com/paulbeattie/bike-shed-bot.git"
   },
   "author": "Paul Beattie",
-  "license": "ISC",
-  "homepage": "https://bitbucket.org/paulbeattie/bike-shed-bot#readme"
+  "license": "MIT",
+  "homepage": "https://github.com/paulbeattie/bike-shed-bot#readme"
 }
