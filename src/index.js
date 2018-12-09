@@ -1,13 +1,13 @@
 const Slack = require('slack');
 const moment = require('moment');
 
-const thursday = 4;
-const currentDayNumber = moment().isoWeekday();
-const numberRegex = /([\d{4}]+)/;
-
 const token = process.env.SLACK_API_KEY;
 const channel = process.env.SLACK_CHANNEL;
 const slackBotId = process.env.SLACK_BOT_ID
+
+const thursday = 4;
+const currentDayNumber = moment().isoWeekday();
+const numberRegex = /([\d{4}]+)/;
 
 const getCorrectLatestTs = () => {
     if (currentDayNumber >= thursday) {
@@ -37,17 +37,17 @@ const extractCode = (message) => {
 }
 
 exports.getShedCode = async (req , res) => {
-    var message = '';
     const slackBot = new Slack({ token })
 
     const messages = await fetchMessages(slackBot);
 
     const bikeShedCode = extractCode(messages);
 
-    if (bikeShedCode != '') {
-        message = `The code is ${bikeShedCode}`
+    let message;
+    if (bikeShedCode) {
+        message = `The code is ${bikeShedCode}`;
     } else {
-        message = 'Sorry there has been an error. Please try again.'
+        message = 'Sorry there has been an error. Please try again.';
     }
 
     res.send(message);
