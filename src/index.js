@@ -13,7 +13,7 @@ const getCorrectLatestTs = () => {
   if (currentDayNumber > thursday) {
     return moment().isoWeekday(thursday).unix();
   } else {
-    return today.unix();
+    return moment().unix();
   }
 };
 
