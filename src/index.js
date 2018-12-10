@@ -24,12 +24,11 @@ const fetchMessages = async (slackBot) => {
   const {messages} = await slackBot.channels.history({channel, oldest, latest});
 
   return messages
-      .filter((message) => message.user == 'USLACKBOT' &&
-            message.bot_id == slackBotId);
+      .find((message) => message.bot_id == slackBotId);
 };
 
 const extractCode = (message) => {
-  const code = message[0].files[0].plain_text.match(numberRegex);
+  const code = message.files[0].plain_text.match(numberRegex);
 
   if (code != null) {
     return code[0];
