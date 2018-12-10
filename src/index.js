@@ -10,16 +10,16 @@ const extractCode = (message) => {
 };
 
 exports.getShedCode = async (req, res) => {
-  const messages = await fetchMessages();
+  const message = await fetchMessages();
 
-  const bikeShedCode = extractCode(messages);
+  const bikeShedCode = extractCode(message);
 
-  let message;
+  let outputMessage;
   if (bikeShedCode) {
-    message = `The code is ${bikeShedCode.split('').join(' ')}`;
+    outputMessage = `The code is ${bikeShedCode.split('').join(' ')}`;
   } else {
-    message = 'Sorry there has been an error. Please try again.';
+    outputMessage = 'Sorry there has been an error. Please try again.';
   }
 
-  res.send(message);
+  res.send(outputMessage);
 };
