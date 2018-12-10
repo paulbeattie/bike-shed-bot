@@ -8,5 +8,4 @@ const extractCode = (message) => {
   }
 };
 
-
 module.exports = extractCode;
