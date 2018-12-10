@@ -1,31 +1,5 @@
-const Slack = require('slack');
-const moment = require('moment');
-
-const token = process.env.SLACK_API_KEY;
-const channel = process.env.SLACK_CHANNEL;
-const slackBotId = process.env.SLACK_BOT_ID;
-
-const thursday = 4;
-const currentDayNumber = moment().isoWeekday();
+const fetchMessages = require('./fetchmessages');
 const numberRegex = /([\d{4}]+)/;
-
-const getCorrectLatestTs = () => {
-  if (currentDayNumber > thursday) {
-    return moment().isoWeekday(thursday).unix();
-  } else {
-    return moment().unix();
-  }
-};
-
-const fetchMessages = async (slackBot) => {
-  const oldest = moment().subtract(1, 'weeks').isoWeekday(thursday).unix();
-  const latest = getCorrectLatestTs();
-
-  const {messages} = await slackBot.channels.history({channel, oldest, latest});
-
-  return messages
-      .find((message) => message.bot_id == slackBotId);
-};
 
 const extractCode = (message) => {
   const code = message.files[0].plain_text.match(numberRegex);
@@ -36,15 +10,13 @@ const extractCode = (message) => {
 };
 
 exports.getShedCode = async (req, res) => {
-  const slackBot = new Slack({token});
-
-  const messages = await fetchMessages(slackBot);
+  const messages = await fetchMessages();
 
   const bikeShedCode = extractCode(messages);
 
   let message;
   if (bikeShedCode) {
-    message = `The code is ${bikeShedCode}`;
+    message = `The code is ${bikeShedCode.split('').join(' ')}`;
   } else {
     message = 'Sorry there has been an error. Please try again.';
   }
