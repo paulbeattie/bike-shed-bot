@@ -10,8 +10,8 @@ const currentDayNumber = moment().isoWeekday();
 const numberRegex = /([\d{4}]+)/;
 
 const getCorrectLatestTs = () => {
-  if (currentDayNumber >= thursday) {
-    return moment().isoWeekday(4).unix();
+  if (currentDayNumber > thursday) {
+    return moment().isoWeekday(thursday).unix();
   } else {
     return today.unix();
   }
