@@ -4,20 +4,21 @@ const slackBotId = process.env.SLACK_BOT_ID;
 
 const slackBot = require('slack')({token});
 const moment = require('moment');
+const time = moment().utcOffset(0);
 
 const thursday = 4;
-const currentDayNumber = moment().isoWeekday();
+const currentDayNumber = time.isoWeekday();
 
 const getCorrectLatestTs = () => {
   if (currentDayNumber > thursday) {
-    return moment().isoWeekday(thursday).unix();
+    return time.isoWeekday(thursday).unix();
   } else {
-    return moment().unix();
+    return time.unix();
   }
 };
 
 const fetchMessages = async () => {
-  const oldest = moment().subtract(1, 'weeks').isoWeekday(thursday).unix();
+  const oldest = time.clone().subtract(1, 'weeks').isoWeekday(thursday).unix();
   const latest = getCorrectLatestTs();
 
   const {messages} = await slackBot.channels.history({channel, oldest, latest});

@@ -15,7 +15,7 @@ const bikeShedCode = async () => {
 exports.getShedCode = async (req, res) => {
   const code = await bikeShedCode();
 
-  const message = code instanceof Error ? 'Soz'
+  const message = code instanceof Error ? 'Sorry there\s been an error. Please try again.'
     : `The code is ${code.split('').join(' ')}`;
 
   res.send(message);
