@@ -1,17 +1,22 @@
 const fetchMessages = require('./fetchmessages');
 const extractCode = require('./extractcode');
 
-exports.getShedCode = async (req, res) => {
-  const message = await fetchMessages();
+const bikeShedCode = async () => {
+  try {
+    const message = await fetchMessages();
 
-  const bikeShedCode = extractCode(message);
-
-  let outputMessage;
-  if (bikeShedCode) {
-    outputMessage = `The code is ${bikeShedCode.split('').join(' ')}`;
-  } else {
-    outputMessage = 'Sorry there has been an error. Please try again.';
+    return extractCode(message);
+  } catch (e) {
+    console.log(e);
+    return e
   }
+}
 
-  res.send(outputMessage);
+exports.getShedCode = async (req, res) => {
+  const code = await bikeShedCode();
+
+  const message = code instanceof Error ? 'Soz'
+    : `The code is ${code.split('').join(' ')}`;
+
+  res.send(message);
 };
