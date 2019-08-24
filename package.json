@@ -15,10 +15,10 @@
   "devDependencies": {
     "eslint": "^5.10.0",
     "eslint-config-google": "^0.11.0",
-    "jest": "^24.9.0"
+    "tape": "^4.11.0"
   },
   "scripts": {
-    "test": "jest",
+    "test": "tape tests/**/*.js",
     "lint": "eslint src",
     "dev": "node devServer.js"
   },
