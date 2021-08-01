@@ -19,7 +19,7 @@ const fetchMessages = async () => {
   const oldest = moment().subtract(1, 'weeks').isoWeekday(thursday).unix();
   const latest = getCorrectLatestTs();
 
-  const {messages} = await slackBot.channels.history({channel, oldest, latest});
+  const {messages} = await slackBot.conversations.history({channel, oldest, latest});
 
   return messages
       .find((message) => message.bot_id == slackBotId);

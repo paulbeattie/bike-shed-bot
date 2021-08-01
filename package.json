@@ -23,7 +23,7 @@
     "dev": "node devServer.js"
   },
   "engines": {
-    "node": "8.15.1",
+    "node": ">=14.17.0",
     "yarn": ">=1.10.0"
   },
   "repository": {
